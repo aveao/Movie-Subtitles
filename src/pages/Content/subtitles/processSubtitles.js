@@ -11,7 +11,9 @@ export default function processSubtitles(content, subsRef, setSubs) {
   let curlyBraces = 0;
 
   // Determine the subtitle format to choose the appropriate method for reading them!
-  for (let i = 50; i < 60; i++) {
+  let start_point = content.length > 20 ? Math.floor(content.length / 2) : Math.max(content.length - 10, 0);
+  let end_point = content.length > 10 ? start_point + 10 : content.length - 1;
+  for (let i = start_point; i < end_point; i++) {
     const line = content[i].trim();
     if (/{.*}{.*}/.test(line)) {
       curlyBraces++;
@@ -106,7 +108,7 @@ export default function processSubtitles(content, subsRef, setSubs) {
         }
         previousTextWithoutHtml = { text: textWithoutHtml, count: count };
 
-        newSubs[count].text += line + ' ';
+        newSubs[count].text += line + '<br>';
 
         const music = musicRegEx.test(newSubs[count].text);
 
@@ -155,7 +157,7 @@ export default function processSubtitles(content, subsRef, setSubs) {
     // Adding silence
     const silence = newSubs[i].start - newSubs[i - 1].end;
 
-    if (silence > 5) {
+    if (silence > 1) {
       newSubs.splice(i, 0, {
         text: 'Silence (' + Math.round(silence) + ' seconds)',
         start: newSubs[i - 1].end,

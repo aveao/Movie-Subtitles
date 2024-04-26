@@ -51,6 +51,9 @@ export default function Content({ video, iconWrapper }) {
       function (event) {
         const focusedElement = event.target.nodeName;
         const elementId = event.target.id;
+        const gt_source_language = "auto";
+        const deepl_source_language = "de";
+        const translation_target_language = "en";
 
         if (focusedElement !== 'INPUT' && elementId !== 'contenteditable-root') {
           // Disabling shortcuts when user is typing in search box or writing comments on YouTube
@@ -129,6 +132,28 @@ export default function Content({ video, iconWrapper }) {
             // Sync subtitles (display them 1 second later)
             const syncNow = new CustomEvent('syncNow', { detail: { syncValue: 1, syncLater: true } });
             document.dispatchEvent(syncNow);
+            event.preventDefault();
+            event.stopPropagation();
+          } else if (key === 'u') {
+            // Open subtitle text in Google Translate
+            let subtitleText = document.getElementById("movie-subtitles-text-area").innerText.replaceAll("\n", " ").trim();
+            if (subtitleText) {
+                let url = ("https://translate.google.com/?sl=" + gt_source_language +
+                           "&tl=" + translation_target_language +
+                           "&text=" + encodeURIComponent(subtitleText) + "&op=translate");
+                window.open(url, "_blank");
+            }
+            event.preventDefault();
+            event.stopPropagation();
+          } else if (key === 'i') {
+            // Open subtitle text in DeepL
+            let subtitleText = document.getElementById("movie-subtitles-text-area").innerText.replaceAll("\n", " ").trim();
+            if (subtitleText) {
+                let url = ("https://www.deepl.com/" + translation_target_language + "/translator#" +
+                           deepl_source_language + "/" + translation_target_language + "/" +
+                           encodeURIComponent(subtitleText));
+                window.open(url, "_blank");
+            }
             event.preventDefault();
             event.stopPropagation();
           }

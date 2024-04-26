@@ -1,6 +1,6 @@
 {
-  "name": "Movie Subtitles",
-  "version": "1.8.1",
+  "name": "Movie Subtitles (ave's version)",
+  "version": "1.9.0",
   "description": "Add your own subtitles almost anywhere you want such as Disney, Netflix, YouTube and many more!",
   "manifest_version": 3,
   "background": { "service_worker": "background.bundle.js" },

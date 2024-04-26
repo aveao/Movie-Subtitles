@@ -346,6 +346,7 @@ function Subtitles({ video, subsEnabled, speedDisplay, netflix, editRef }) {
             <SubtitleArea>
               <SubtitleText
                 dangerouslySetInnerHTML={{ __html: infoDialog ? infoDialog : subs[pos].text }}
+                id="movie-subtitles-text-area"
                 className={classes.root}
                 style={{
                   userSelect: editMode ? 'text' : 'none',
